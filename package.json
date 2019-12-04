@@ -1,0 +1,15 @@
+{
+  "name": "chassis-cron",
+  "version": "0.0.2",
+  "dependencies": {
+    "node-schedule": "^1.3.2"
+  },
+  "description": "Cron module for Chassis bootstrapper",
+  "main": "cron.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kris Sinclair",
+  "repository": "https://github.com/KrizzyB/chassis-cron",
+  "license": "ISC"
+}
