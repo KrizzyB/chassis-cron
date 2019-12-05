@@ -9,7 +9,7 @@ module.exports.startSchedule = function(args) {
 
         if (settings && settings.enabled) {
             Cron[jobs[c]].cron = cron.scheduleJob(settings.frequency, function() {
-                exports.run(jobs[c], args);
+                exports.run(jobs[c], args, settings.thread);
             });
             Log.info("Cron job \"" + jobs[c] + "\" started at frequency \"" + settings.frequency + "\".");
         } else {
@@ -25,8 +25,12 @@ module.exports.startSchedule = function(args) {
     startCron(0);
 };
 
-module.exports.run = function(job, args) {
-    new Thread(Cron[job].path, "job", args).fork();
+module.exports.run = function(job, args, thread) {
+    if (thread) {
+        new Thread(Cron[job].path, "job", args).fork();
+    } else {
+        require(Cron[job].path).job(args);
+    }
 };
 
 module.exports.job = function(args) {
