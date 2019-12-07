@@ -26,22 +26,15 @@ module.exports.startSchedule = function(args) {
 };
 
 module.exports.run = function(job, args, thread) {
+    if (!Cron) {
+        global.Cron = findCrons();
+    }
+
     if (thread) {
         new Thread(Cron[job].path, "job", args).fork();
     } else {
         require(Cron[job].path).job(args);
     }
-};
-
-module.exports.job = function(args) {
-    if (!Cron) {
-        global.Cron = findCrons();
-    }
-
-    Log.info("Running cron job: " + args.job);
-
-    let Job = require(Cron[args.job].file).job;
-    Job(args.args);
 };
 
 function findCrons() {
