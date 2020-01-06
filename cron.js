@@ -26,7 +26,7 @@ module.exports.startSchedule = function(args) {
 };
 
 module.exports.run = function(job, args, thread) {
-    if (!Cron) {
+    if (!global.Cron) {
         global.Cron = findCrons();
     }
 
